@@ -324,7 +324,7 @@ body {
         align-items: center;
         justify-content: center;
         position: fixed;
-        right: 16px;
+        right: 80px;
         bottom: 20px;
         width: 54px;
         height: 54px;
@@ -341,7 +341,7 @@ body {
     .right-sidebar {
         display: none;
         position: fixed;
-        right: 100px;
+        right: 16px;
         bottom: 84px;
         width: calc(100% - 24px);
         max-width: 360px;
