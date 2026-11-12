@@ -348,15 +348,27 @@ body {
         z-index: 9999;
     }
 
+        .right-sidebar {
+        display: none;
+        position: fixed;
+        left: 50%;
+        bottom: 90px;
+        transform: translateX(-50%);
+        width: calc(100% - 24px);
+        max-width: 380px;
+        z-index: 9999;
+    }
+
     .right-sidebar.chat-open {
         display: block;
         animation: slideUpChat 0.25s ease;
     }
 
     @keyframes slideUpChat {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; transform: translate(-50%, 15px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
     }
+
 
     .comments-widget {
         border: 1px solid #38bdf8;
