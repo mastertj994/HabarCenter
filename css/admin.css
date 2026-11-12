@@ -367,3 +367,31 @@
     border: 1px solid #38bdf8;
     border-radius: 50%;
 }
+/* --- АДАПТИВНОСТЬ АДМИН-ПАНЕЛИ --- */
+@media (max-width: 960px) {
+    .admin-container {
+        grid-template-columns: 1fr; /* Редактор сверху, список статей снизу */
+    }
+
+    .form-row {
+        flex-direction: column; /* Поля заголовка и рубрики друг под другом */
+        gap: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .admin-nav-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .smart-toolbar {
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .smart-toolbar button {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
