@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   <!-- [СТРОКА 5] Мета-теги описания и SEO для HabarCenter -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabarCenter — Профессиональный новостной портал</title>
+    <meta name="description" content="Оперативные новости технологий, науки, экономики и общества. Актуальные статьи, аналитика и обзоры на портале HabarCenter.">
+    
+    <!-- Open Graph теги для красивых превью в мессенджерах (Telegram, WhatsApp и др.) -->
+    <meta property="og:title" content="HabarCenter — Новостной портал">
+    <meta property="og:description" content="Последние новости технологий, науки и общества.">
+    <meta property="og:type" content="website">
+</head>
+<body>
+
+    <!-- Верхнее скругленное меню -->
+    <!-- [СТРОКА 15] Верхнее скругленное меню с кликабельными главными разделами -->
+    <header class="top-header">
+        <!-- [СТРОКА 14] Обновленный двухцветный логотип -->
+        <div class="logo" onclick="openNews(newsDatabase[0].id)">
+            <span class="logo-icon">◈</span> Habar<span class="logo-accent">Center</span>
+        </div>
+        <nav class="main-nav">
+            <ul class="menu">
+                <li class="menu-item">
+                    <a href="#" onclick="openCategoryFeed('tech', 'Технологии')">Технологии ▾</a>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="tech">Искусственный интеллект</a></li>
+                        <li><a href="#" data-category="tech">Гаджеты и железо</a></li>
+                        <li><a href="#" data-category="tech">Космос и наука</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" onclick="openCategoryFeed('economy', 'Экономика')">Экономика ▾</a>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="economy">Финансы и рынки</a></li>
+                        <li><a href="#" data-category="economy">Бизнес и стартапы</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#" onclick="openCategoryFeed('society', 'Общество')">Общество ▾</a>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="society">Городская среда</a></li>
+                        <li><a href="#" data-category="society">Культура и спорт</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Основная сетка сайта -->
+    <div class="container">
+        
+        <!-- Левая колонка: Лента свежих + Похожие новости -->
+        <aside class="left-sidebar">
+            <div class="sidebar-block">
+                <h3 class="block-title">Свежие новости</h3>
+                <ul id="fresh-news-list" class="news-list"></ul>
+            </div>
+
+            <div class="sidebar-block">
+                <h3 class="block-title">Похожие по теме</h3>
+                <ul id="related-news-list" class="news-list"></ul>
+            </div>
+        </aside>
+
+        <!-- Центральная часть: Текущая новость -->
+        <main class="main-content">
+            <article id="article-container" class="article-box">
+                <span id="article-category" class="badge">Категория</span>
+                <h1 id="article-title">Заголовок новости</h1>
+                <div id="article-date" class="article-meta">Дата публикации</div>
+                <div id="article-body" class="article-text"></div>
+            </article>
+        </main>
+
+        <!-- Правая колонка: Закрепленное окно комментариев -->
+        <aside class="right-sidebar">
+            <div class="comments-widget">
+                <h3 class="block-title">Комментарии к теме</h3>
+                <div id="comments-list" class="comments-list"></div>
+                <form id="comment-form" class="comment-form">
+                    <input type="text" id="comment-author" placeholder="Ваше имя" required>
+                    <textarea id="comment-text" placeholder="Ваш комментарий..." rows="3" required></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            </div>
+        </aside>
+
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
