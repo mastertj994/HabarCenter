@@ -1,4 +1,4 @@
-// Базовые новости
+// Базовые новости (используются, если localStorage пуст)
 const defaultNews = [
     {
         id: 1,
@@ -6,7 +6,7 @@ const defaultNews = [
         categoryName: "Технологии",
         title: "Прорыв в квантовых вычислениях: новый процессор побил рекорд стабильности",
         date: "12 ноября 2026, 09:30",
-        text: "<p>Инженеры представили архитектуру нового поколения, способную удерживать квантовую запутанность.</p>"
+        text: "<p>Инженеры представили архитектуру нового поколения, способную удерживать квантовую запутанность в десять раз дольше предыдущих аналогов.</p><p>Это открытие приближает момент, когда квантовые компьютеры начнут применяться для моделирования сложных лекарств и криптографии в реальном времени.</p>"
     },
     {
         id: 2,
@@ -14,14 +14,18 @@ const defaultNews = [
         categoryName: "Экономика",
         title: "Рынок зелёной энергетики показал рекордный приток частных инвестиций",
         date: "11 ноября 2026, 19:40",
-        text: "<p>За последний квартал объём вложений в накопители энергии вырос на 24%.</p>"
+        text: "<p>За последний квартал объём вложений в накопители энергии и солнечную генерацию вырос на 24% по сравнению с прошлым годом.</p>"
     }
 ];
 
+// Надежная загрузка админских новостей из localStorage с фоллбеком на defaultNews
 let savedNews = JSON.parse(localStorage.getItem('siteNewsDatabase'));
-let newsDatabase = (savedNews && savedNews.length > 0) ? savedNews : defaultNews; {
-    1: [{ author: "Алексей", text: "Отличная статья!" }]
+let newsDatabase = (savedNews && savedNews.length > 0) ? savedNews : defaultNews;
+
+let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {
+    1: [{ author: "Алексей", text: "Отличная статья и глубокий анализ!" }]
 };
+
 let currentNewsId = newsDatabase.length > 0 ? newsDatabase[0].id : null;
 
 const freshListEl = document.getElementById('fresh-news-list');
@@ -192,4 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if (closeBtn && commentsSidebar) {
-        closeBtn.addEventListener('click',
+        closeBtn.addEventListener('click', () => {
+            commentsSidebar.classList.remove('chat-open');
+        });
+    }
+});
