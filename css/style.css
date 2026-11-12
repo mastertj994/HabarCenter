@@ -1,1 +1,271 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0b192c;
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+
+button, input, textarea {
+    font-family: inherit;
+}
+
+/* Верхнее меню */
+.top-header {
+    background-color: #112540;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1e3a5f;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #38bdf8;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+/* Круглые края у пунктов меню */
+.menu-item > a {
+    display: block;
+    padding: 10px 24px;
+    background-color: #183459;
+    color: #f8fafc;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-radius: 50px;
+    border: 1px solid #254b7c;
+    transition: all 0.25s ease;
+}
+
+.menu-item:hover > a {
+    background-color: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+/* Выпадающее подменю при наведении */
+.submenu {
+    list-style: none;
+    position: absolute;
+    top: 115%;
+    left: 0;
+    min-width: 230px;
+    background-color: #132a4a;
+    border: 1px solid #254b7c;
+    border-radius: 20px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.menu-item:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 18px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 30px;
+    transition: background 0.2s;
+}
+
+.submenu li a:hover {
+    background-color: #1e4273;
+    color: #38bdf8;
+}
+
+/* Основная сетка */
+.container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    gap: 25px;
+    align-items: start;
+}
+
+.sidebar-block, .article-box, .comments-widget {
+    background-color: #112540;
+    border: 1px solid #1e3a5f;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-block {
+    margin-bottom: 20px;
+}
+
+.block-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #38bdf8;
+    border-bottom: 1px solid #1e3a5f;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+/* Левая колонка */
+.news-list {
+    list-style: none;
+}
+
+.news-list li {
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #cbd5e1;
+    border-bottom: 1px solid #183459;
+    transition: all 0.2s;
+}
+
+.news-list li:last-child {
+    border-bottom: none;
+}
+
+.news-list li:hover, .news-list li.active {
+    background-color: #183459;
+    color: #ffffff;
+}
+
+.news-list li.active {
+    border-left: 3px solid #38bdf8;
+}
+
+/* Центральная колонка */
+.article-box {
+    min-height: 500px;
+    padding: 30px;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #0284c7;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.article-box h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.article-meta {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.article-text p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #e2e8f0;
+}
+
+/* Правая колонка: закрепленные комментарии */
+.right-sidebar {
+    position: sticky;
+    top: 85px;
+}
+
+.comments-list {
+    max-height: 320px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 5px;
+}
+
+.comment-item {
+    background-color: #183459;
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.comment-author {
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 4px;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    background-color: #0b192c;
+    border: 1px solid #254b7c;
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+}
+
+.comment-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0284c7;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.comment-form button:hover {
+    background-color: #0369a1;
+}
+.article-text img { max-width: 100%; border-radius: 12px; margin: 15px 0; }
+.article-text h2 { color: #38bdf8; margin: 20px 0 10px; font-size: 22px; }
+.article-text blockquote { border-left: 3px solid #38bdf8; background: #183459; padding: 12px 18px; border-radius: 0 12px 12px 0; margin: 15px 0; font-style: italic; }
