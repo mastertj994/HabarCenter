@@ -7,11 +7,21 @@ const defaultNews = [
         title: "Прорыв в квантовых вычислениях: новый процессор побил рекорд стабильности",
         date: "12 ноября 2026, 09:30",
         text: "<p>Инженеры представили архитектуру нового поколения, способную удерживать квантовую запутанность.</p>"
+    },
+    {
+        id: 2,
+        category: "economy",
+        categoryName: "Экономика",
+        title: "Рынок зелёной энергетики показал рекордный приток частных инвестиций",
+        date: "11 ноября 2026, 19:40",
+        text: "<p>За последний квартал объём вложений в накопители энергии вырос на 24%.</p>"
     }
 ];
 
 let newsDatabase = JSON.parse(localStorage.getItem('siteNewsDatabase')) || defaultNews;
-let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {};
+let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {
+    1: [{ author: "Алексей", text: "Отличная статья!" }]
+};
 let currentNewsId = newsDatabase.length > 0 ? newsDatabase[0].id : null;
 
 const freshListEl = document.getElementById('fresh-news-list');
@@ -23,7 +33,7 @@ const articleBodyEl = document.getElementById('article-body');
 const commentsListEl = document.getElementById('comments-list');
 const commentForm = document.getElementById('comment-form');
 
-// Открытие статьи
+// Открытие отдельной статьи
 function openNews(id) {
     const newsItem = newsDatabase.find(item => item.id === id);
     if (!newsItem) return;
@@ -39,7 +49,7 @@ function openNews(id) {
     renderComments(id);
 }
 
-// Открытие категории
+// Открытие ленты категории
 function openCategoryFeed(categoryCode, categoryTitle) {
     currentNewsId = null;
     articleCategoryEl.textContent = "Раздел";
@@ -148,7 +158,7 @@ if (newsDatabase.length > 0) {
     openNews(newsDatabase[0].id);
 }
 
-// Мобильный обработчик для меню и чата
+// Мобильная логика (бегущая строка, меню по клику, плавающий чат)
 document.addEventListener('DOMContentLoaded', () => {
     const tickerEl = document.getElementById('mobile-news-ticker');
     if (tickerEl) {
@@ -158,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }</div>`;
     }
 
-    // Меню по клику
+    // Обработка главных разделов меню на мобильном (второй клик закрывает)
     document.querySelectorAll('.menu-parent-link').forEach(link => {
         link.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
@@ -171,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Плавающий чат комментариев
+    // Управление плавающим чатом комментариев
     const fabBtn = document.getElementById('mobile-chat-fab');
     const commentsSidebar = document.getElementById('comments-sidebar');
     const closeBtn = document.getElementById('mobile-chat-close');
@@ -182,8 +192,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if (closeBtn && commentsSidebar) {
-        closeBtn.addEventListener('click', () => {
-            commentsSidebar.classList.remove('chat-open');
-        });
-    }
-});
+        closeBtn.addEventListener('click',
