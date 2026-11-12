@@ -173,7 +173,7 @@ if (newsDatabase.length > 0) {
     openNews(newsDatabase[0].id);
 }
 
-// --- МОБИЛЬНАЯ СПЕЦИФИКА (РАБОТАЕТ ТОЛЬКО НА ЭКРАНАХ <= 768px) ---
+// --- МОБИЛЬНАЯ СПЕЦИФИКА ---
 function initMobileFeatures() {
     const tickerEl = document.getElementById('mobile-news-ticker');
     if (tickerEl) {
@@ -183,7 +183,7 @@ function initMobileFeatures() {
         }</div>`;
     }
 
-    // Меню по второму клику на мобильном
+    // Главные пункты меню (только для мобильных по второму клику)
     document.querySelectorAll('.menu-parent-link').forEach(link => {
         link.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
@@ -203,6 +203,16 @@ function initMobileFeatures() {
         });
     });
 
+    // ЖЕСТКАЯ ИЗОЛЯЦИЯ: клик по подпунктам открывает только их и закрывает меню на мобильном
+    document.querySelectorAll('.submenu a').forEach(subLink => {
+        subLink.addEventListener('click', (e) => {
+            e.stopPropagation(); // Останавливаем передачу клика родителю
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('open'));
+            }
+        });
+    });
+
     // Плавающее окно комментариев на мобильном
     const fabBtn = document.getElementById('mobile-chat-fab');
     const commentsSidebar = document.getElementById('comments-sidebar');
@@ -218,6 +228,9 @@ function initMobileFeatures() {
             commentsSidebar.classList.remove('chat-open');
         });
     }
+}
+
+initMobileFeatures();
 }
 
 initMobileFeatures();
