@@ -184,3 +184,72 @@ if (chatCloseBtn && chatWindow) {
         chatWindow.style.display = 'none';
     });
 }
+// --- МОБИЛЬНАЯ ЛОГИКА (ТОЛЬКО ДЛЯ ЭКРАНОВ <= 768px) ---
+function initMobileFeatures() {
+    // 1. Заполнение бегущей строки свежими новостями
+    const tickerEl = document.getElementById('mobile-news-ticker');
+    if (tickerEl && typeof newsDatabase !== 'undefined') {
+        const items = [...newsDatabase, ...newsDatabase];
+        tickerEl.innerHTML = `<div class="mobile-ticker-track">${
+            items.map(n => `<span class="mobile-ticker-item" onclick="openNews(${n.id})">⚡ ${n.title}</span>`).join('')
+        }</div>`;
+    }
+
+    // 2. Открытие и закрытие пунктов меню строго по второму клику на мобильном
+    document.querySelectorAll('.menu-parent-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parentItem = this.parentElement;
+            const cat = this.getAttribute('data-cat');
+            const title = this.getAttribute('data-title');
+
+            if (window.innerWidth <= 768) {
+                const isOpen = parentItem.classList.contains('open');
+                // Закрываем все остальные пункты
+                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('open'));
+
+                if (!isOpen) {
+                    // Первый тап: открываем подменю и показываем ленту рубрики (даже если она пустая)
+                    parentItem.classList.add('open');
+                    if (typeof openCategoryFeed === 'function') {
+                        openCategoryFeed(cat, title);
+                    }
+                }
+                // Второй тап: класс 'open' уже снят выше, подменю просто закрывается без скачков
+            } else {
+                // На ПК работает стандартный клик по разделу
+                if (typeof openCategoryFeed === 'function') {
+                    openCategoryFeed(cat, title);
+                }
+            }
+        });
+    });
+
+    // Закрывать мобильное подменю при выборе конкретного подпункта
+    document.querySelectorAll('.submenu a').forEach(subLink => {
+        subLink.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('open'));
+            }
+        });
+    });
+
+    // 3. Кнопка и всплывающее окно комментариев в стиле онлайн-поддержки
+    const fabBtn = document.getElementById('mobile-chat-fab');
+    const commentsSidebar = document.getElementById('comments-sidebar');
+    const closeBtn = document.getElementById('mobile-chat-close');
+
+    if (fabBtn && commentsSidebar) {
+        fabBtn.addEventListener('click', () => {
+            commentsSidebar.classList.toggle('chat-open');
+        });
+    }
+
+    if (closeBtn && commentsSidebar) {
+        closeBtn.addEventListener('click', () => {
+            commentsSidebar.classList.remove('chat-open');
+        });
+    }
+}
+
+initMobileFeatures();
