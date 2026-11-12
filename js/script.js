@@ -18,8 +18,8 @@ const defaultNews = [
     }
 ];
 
-let newsDatabase = JSON.parse(localStorage.getItem('siteNewsDatabase')) || defaultNews;
-let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {
+let savedNews = JSON.parse(localStorage.getItem('siteNewsDatabase'));
+let newsDatabase = (savedNews && savedNews.length > 0) ? savedNews : defaultNews; {
     1: [{ author: "Алексей", text: "Отличная статья!" }]
 };
 let currentNewsId = newsDatabase.length > 0 ? newsDatabase[0].id : null;
