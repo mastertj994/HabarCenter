@@ -1,4 +1,4 @@
-// Базовые новости (если хранилище пустое)
+// Базовые новости
 const defaultNews = [
     {
         id: 1,
@@ -6,32 +6,13 @@ const defaultNews = [
         categoryName: "Технологии",
         title: "Прорыв в квантовых вычислениях: новый процессор побил рекорд стабильности",
         date: "12 ноября 2026, 09:30",
-        text: "<p>Инженеры представили архитектуру нового поколения, способную удерживать квантовую запутанность в десять раз дольше предыдущих аналогов.</p><p>Это открытие приближает момент, когда квантовые компьютеры начнут применяться для моделирования сложных лекарств и криптографии в реальном времени.</p>"
-    },
-    {
-        id: 2,
-        category: "tech",
-        categoryName: "Технологии",
-        title: "Нейросети научились оптимизировать энергосети мегаполисов",
-        date: "12 ноября 2026, 08:15",
-        text: "<p>Автоматизированные алгоритмы теперь перераспределяют нагрузку на подстанции за доли секунды, снижая потери электроэнергии на 18%.</p>"
-    },
-    {
-        id: 3,
-        category: "economy",
-        categoryName: "Экономика",
-        title: "Рынок зелёной энергетики показал рекордный приток частных инвестиций",
-        date: "11 ноября 2026, 19:40",
-        text: "<p>За последний квартал объём вложений в накопители энергии и солнечную генерацию вырос на 24% по сравнению с прошлым годом.</p>"
+        text: "<p>Инженеры представили архитектуру нового поколения, способную удерживать квантовую запутанность.</p>"
     }
 ];
 
 let newsDatabase = JSON.parse(localStorage.getItem('siteNewsDatabase')) || defaultNews;
-let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {
-    1: [{ author: "Алексей", text: "Наконец-то квантовые технологии выходят из лабораторий!" }]
-};
-
-let currentNewsId = newsDatabase.length > 0 ? newsDatabase[0].id : 1;
+let commentsStorage = JSON.parse(localStorage.getItem('siteComments')) || {};
+let currentNewsId = newsDatabase.length > 0 ? newsDatabase[0].id : null;
 
 const freshListEl = document.getElementById('fresh-news-list');
 const relatedListEl = document.getElementById('related-news-list');
@@ -42,14 +23,12 @@ const articleBodyEl = document.getElementById('article-body');
 const commentsListEl = document.getElementById('comments-list');
 const commentForm = document.getElementById('comment-form');
 
-// Открытие одной статьи
+// Открытие статьи
 function openNews(id) {
     const newsItem = newsDatabase.find(item => item.id === id);
-    
     if (!newsItem) return;
 
     currentNewsId = id;
-
     articleCategoryEl.textContent = newsItem.categoryName;
     articleTitleEl.textContent = newsItem.title;
     articleDateEl.textContent = newsItem.date;
@@ -60,7 +39,7 @@ function openNews(id) {
     renderComments(id);
 }
 
-// Открытие ленты категории
+// Открытие категории
 function openCategoryFeed(categoryCode, categoryTitle) {
     currentNewsId = null;
     articleCategoryEl.textContent = "Раздел";
@@ -88,7 +67,7 @@ function openCategoryFeed(categoryCode, categoryTitle) {
         articleBodyEl.innerHTML = htmlList;
     }
 
-    commentsListEl.innerHTML = '<p style="font-size:13px; color:#64748b;">Выберите конкретную новость для чтения и комментариев</p>';
+    if (commentsListEl) commentsListEl.innerHTML = '<p style="font-size:13px; color:#64748b;">Выберите конкретную новость для чтения</p>';
     if (relatedListEl) relatedListEl.innerHTML = '<li style="cursor:default; color:#64748b;">Общий просмотр раздела</li>';
     renderFreshNews();
 }
@@ -145,15 +124,13 @@ if (commentForm) {
     commentForm.addEventListener('submit', function(e) {
         e.preventDefault();
         if (!currentNewsId) {
-            alert('Выберите конкретную новость для отправки комментария!');
+            alert('Выберите конкретную новость для комментариев!');
             return;
         }
         const authorInput = document.getElementById('comment-author');
         const textInput = document.getElementById('comment-text');
 
-        if (!commentsStorage[currentNewsId]) {
-            commentsStorage[currentNewsId] = [];
-        }
+        if (!commentsStorage[currentNewsId]) commentsStorage[currentNewsId] = [];
 
         commentsStorage[currentNewsId].push({
             author: authorInput.value.trim(),
@@ -161,20 +138,18 @@ if (commentForm) {
         });
 
         localStorage.setItem('siteComments', JSON.stringify(commentsStorage));
-
         authorInput.value = '';
         textInput.value = '';
         renderComments(currentNewsId);
     });
 }
 
-// Инициализация при старте
 if (newsDatabase.length > 0) {
     openNews(newsDatabase[0].id);
 }
 
-// --- МОБИЛЬНАЯ СПЕЦИФИКА ---
-function initMobileFeatures() {
+// Мобильный обработчик для меню и чата
+document.addEventListener('DOMContentLoaded', () => {
     const tickerEl = document.getElementById('mobile-news-ticker');
     if (tickerEl) {
         const items = [...newsDatabase, ...newsDatabase];
@@ -183,37 +158,20 @@ function initMobileFeatures() {
         }</div>`;
     }
 
-    // Главные пункты меню (только для мобильных по второму клику)
+    // Меню по клику
     document.querySelectorAll('.menu-parent-link').forEach(link => {
         link.addEventListener('click', function(e) {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 const parentItem = this.parentElement;
-                const cat = this.getAttribute('data-cat');
-                const title = this.getAttribute('data-title');
-
                 const isOpen = parentItem.classList.contains('open');
                 document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('open'));
-
-                if (!isOpen) {
-                    parentItem.classList.add('open');
-                    openCategoryFeed(cat, title);
-                }
+                if (!isOpen) parentItem.classList.add('open');
             }
         });
     });
 
-    // ЖЕСТКАЯ ИЗОЛЯЦИЯ: клик по подпунктам открывает только их и закрывает меню на мобильном
-    document.querySelectorAll('.submenu a').forEach(subLink => {
-        subLink.addEventListener('click', (e) => {
-            e.stopPropagation(); // Останавливаем передачу клика родителю
-            if (window.innerWidth <= 768) {
-                document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('open'));
-            }
-        });
-    });
-
-    // Плавающее окно комментариев на мобильном
+    // Плавающий чат комментариев
     const fabBtn = document.getElementById('mobile-chat-fab');
     const commentsSidebar = document.getElementById('comments-sidebar');
     const closeBtn = document.getElementById('mobile-chat-close');
@@ -228,9 +186,4 @@ function initMobileFeatures() {
             commentsSidebar.classList.remove('chat-open');
         });
     }
-}
-
-initMobileFeatures();
-}
-
-initMobileFeatures();
+});
