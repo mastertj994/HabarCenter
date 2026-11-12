@@ -269,3 +269,57 @@ button, input, textarea {
 .article-text img { max-width: 100%; border-radius: 12px; margin: 15px 0; }
 .article-text h2 { color: #38bdf8; margin: 20px 0 10px; font-size: 22px; }
 .article-text blockquote { border-left: 3px solid #38bdf8; background: #183459; padding: 12px 18px; border-radius: 0 12px 12px 0; margin: 15px 0; font-style: italic; }
+/* --- АДАПТИВНОСТЬ ДЛЯ ПЛАНШЕТОВ И СМАРТФОНОВ --- */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr; /* Выстраиваем все блоки в одну колонку */
+        gap: 20px;
+    }
+
+    .right-sidebar {
+        position: static; /* Убираем «прилипание» блока комментариев */
+    }
+}
+
+@media (max-width: 768px) {
+    .top-header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .menu-item > a {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .submenu {
+        position: static; /* Подменю открывается прямо внутри потока на телефоне */
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        margin-top: 6px;
+        box-shadow: none;
+    }
+
+    .menu-item:hover .submenu,
+    .menu-item:focus-within .submenu {
+        display: block;
+    }
+
+    .article-box {
+        padding: 20px 16px;
+        min-height: auto;
+    }
+
+    .article-box h1 {
+        font-size: 22px;
+    }
+}
