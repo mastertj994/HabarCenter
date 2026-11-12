@@ -411,6 +411,7 @@ body {
     text-decoration: none;
     transition: all 0.25s ease;
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+    outline: none; /* Убирает стандартную рамку фокуса браузера */
 }
 
 .emergency-admin-btn:hover {
@@ -419,4 +420,10 @@ body {
     border-color: #f87171;
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.3);
     transform: translateY(-1px);
+}
+
+.emergency-admin-btn:focus, 
+.emergency-admin-btn:active {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2) !important; /* Фиксирует красивое неоновое свечение вместо резкой рамки */
 }
