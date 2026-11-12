@@ -368,7 +368,7 @@ body {
         align-items: center;
         justify-content: center;
         position: fixed;
-        right: 18px; /* Сдвинули левее от правого края */
+        right: 40px; /* Сдвинули левее от правого края */
         bottom: 24px; /* Чуть приподняли от низа */
         width: 54px;
         height: 54px;
