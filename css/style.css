@@ -396,3 +396,27 @@ body {
 
     }
 }
+/* --- КНОПКА EMERGENCY (АДМИНКА) --- */
+.emergency-admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+.emergency-admin-btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #f87171;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
