@@ -363,14 +363,24 @@ body {
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
     }
 
-    .mobile-chat-close {
-        display: block;
-        background: none;
-        border: none;
-        color: #94a3b8;
+        .mobile-chat-fab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        right: 28px; /* Сдвинули левее от правого края */
+        bottom: 24px; /* Чуть приподняли от низа */
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background-color: #0284c7;
+        color: #ffffff;
         font-size: 24px;
-        line-height: 1;
+        border: 2px solid #38bdf8;
+        box-shadow: 0 8px 24px rgba(2, 132, 199, 0.5);
         cursor: pointer;
-        padding-bottom: 10px;
+        z-index: 9998;
+    }
+
     }
 }
