@@ -234,7 +234,6 @@ body {
     background-color: #0369a1;
 }
 
-
 /* --- МОБИЛЬНЫЕ СТИЛИ (СКРЫТЫ НА ПК) --- */
 .mobile-ticker-bar,
 .mobile-chat-fab,
@@ -328,7 +327,7 @@ body {
         right: 16px;
         bottom: 20px;
         width: 54px;
-        height: 54px, ;
+        height: 54px;
         border-radius: 50%;
         background-color: #0284c7;
         color: #ffffff;
